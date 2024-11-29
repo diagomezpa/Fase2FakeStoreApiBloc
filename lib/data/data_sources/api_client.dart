@@ -9,24 +9,32 @@ class ApiClient {
   Future<Either<Failure, List<T>>> fetchList<T>(
       String endpoint, T Function(Map<String, dynamic>) fromJson) async {
     try {
-      final response =
-          await http.get(Uri.parse('https://fakestoreapi.com/products'));
+      final response = await http.get(Uri.parse('$baseUrl$endpoint'));
       print('probando ');
       if (response.statusCode == 200) {
         print(' 200');
-        //print(response.body);
         List<dynamic> data = json.decode(response.body);
-        //print(data);
-        List<T> items = data.map((item) => fromJson(item)).toList();
+        if (data != null) {
+          print(data);
+          List<T> items = [];
+          for (var item in data) {
+            print('xxxxxxxxxxxxxxxxxxx');
+            print(item);
+            items.add(fromJson(item));
+            print('yyyyyyyyyyyyyyyyyyy');
+          }
 
-        return Right(items);
+          return Right(items);
+        } else {
+          return Left(ServerFailure('Failed to load data: Data is null'));
+        }
       } else {
         print('probando 2');
         return Left(
             ServerFailure('Failed to load data: ${response.statusCode}'));
       }
     } catch (e) {
-      print('probando 3');
+      print('probando 3 + ' + e.toString());
       return Left(NetworkFailure('Failed to load data: $e'));
     }
   }
