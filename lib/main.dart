@@ -2,6 +2,8 @@ import 'package:fase2cleanarchitecture/data/data_sources/api_client.dart';
 import 'package:fase2cleanarchitecture/data/repositories/cart_repository_impl.dart';
 import 'package:fase2cleanarchitecture/data/repositories/product_repository_impl.dart';
 import 'package:fase2cleanarchitecture/domain/entities/product.dart';
+import 'package:fase2cleanarchitecture/domain/use_cases/carts/delete_cart.dart';
+import 'package:fase2cleanarchitecture/domain/use_cases/carts/get_cart.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/products/create_product.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/products/delete_product.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/products/get_product.dart';
@@ -23,13 +25,20 @@ void main() {
 
   final cartRepository = CartRepositoryImpl(apiClient: ApiClient());
   final getCarts = GetCarts(cartRepository);
-  final cartBloc = CartBloc(getCarts);
+  final getcarts = GetCarts(cartRepository);
+  final getCart = GetCart(cartRepository);
+  final deleteCart = DeleteCart(cartRepository);
+  final cartBloc = CartBloc(getCarts, getCart, deleteCart);
 
   cartBloc.state.listen((state) {
     if (state is CartLoading) {
       print('Loading carts...');
+    } else if (state is CartLoaded) {
+      print('Cart loaded: ${state.cart.id} ${state.cart.userId}');
     } else if (state is CartsLoaded) {
       print('Carts loaded: ${state.carts.length}');
+    } else if (state is CartDeleted) {
+      print('Cart deleted with ID: ${state.cart.id}');
     } else if (state is CartError) {
       print('Error: ${state.message}');
     }
@@ -67,5 +76,7 @@ void main() {
   //   price: 101,
   // )));
   //productBloc.eventSink.add(UpdateProductEvent(1));
-  cartBloc.eventSink.add(LoadCarts());
+  //cartBloc.eventSink.add(LoadCartsEvent());
+  //cartBloc.eventSink.add(LoadCartEvent(1));
+  cartBloc.eventSink.add(DeleteCartEvent(1));
 }

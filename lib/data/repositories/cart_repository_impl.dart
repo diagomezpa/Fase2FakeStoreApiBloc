@@ -29,4 +29,36 @@ class CartRepositoryImpl implements CartRepository {
       },
     );
   }
+
+  @override
+  Future<Either<Failure, Cart>> fetchCartById(int id) async {
+    final response = await apiClient.fetchItem(
+      ApiEndpoints.cartById(id),
+      (data) => CartModel.fromJson(data), // Convierte a ProductModel
+    );
+
+    return response.fold(
+      (failure) => Left(failure),
+      (cartModel) {
+        // Convierte ProductModel a Product (entidad)
+        return Right(cartModel.toEntity());
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, Cart>> deleteCart(int id) async {
+    final response = await apiClient.deleteItem(
+      ApiEndpoints.cartById(id),
+      (data) => CartModel.fromJson(data), // Convierte a CartModel
+    );
+
+    return response.fold(
+      (failure) => Left(failure),
+      (cartModel) {
+        // Convierte CartModel a Cart (entidad)
+        return Right(cartModel.toEntity());
+      },
+    );
+  }
 }
