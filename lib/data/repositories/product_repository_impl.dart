@@ -19,11 +19,10 @@ class ProductRepositoryImpl implements ProductRepository {
           product), // Convierte Product (entidad) a ProductModel y luego a JSON
       (data) => ProductModel.fromJson(data),
     );
-    print('response ' + response.toString());
+
     return response.fold(
       (failure) => Left(failure),
       (productModel) {
-        print('productModel ' + productModel.toString());
         // Convierte ProductModel a Product (entidad)
         return Right(productModel.toEntity());
       },
@@ -65,14 +64,14 @@ class ProductRepositoryImpl implements ProductRepository {
       ApiEndpoints.products,
       (data) => ProductModel.fromJson(data), // Convierte a ProductModel
     );
-    //print(response);
+
     return response.fold(
       (failure) => Left(failure),
       (productModels) {
         // Convierte la lista de ProductModel a Product (entidad)
         List<Product> products =
             productModels.map((model) => model.toEntity()).toList();
-        // print(products);
+
         return Right(products);
       },
     );
