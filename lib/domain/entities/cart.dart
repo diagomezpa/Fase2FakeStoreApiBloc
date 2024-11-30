@@ -2,22 +2,22 @@ class Cart {
   final int? id;
   final int? userId;
   final DateTime? date;
-  final List<Article>? articles;
+  final List<Products>? products;
 
   Cart({
     required this.id,
     required this.userId,
     required this.date,
-    required this.articles,
+    required this.products,
   });
 }
 
-class Article {
-  int articleId;
+class Products {
+  int productId;
   int quantity;
 
-  Article({
-    required this.articleId,
+  Products({
+    required this.productId,
     required this.quantity,
   });
 }

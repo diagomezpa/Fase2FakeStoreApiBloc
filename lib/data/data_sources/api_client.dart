@@ -77,12 +77,14 @@ class ApiClient {
         Map<String, dynamic> data = json.decode(response.body);
         print(data);
         T newItem = fromJson(data);
+        print('new item $newItem');
         return Right(newItem);
       } else {
         return Left(
             ServerFailure('Failed to create item: ${response.statusCode}'));
       }
     } catch (e) {
+      print('error $e');
       return Left(NetworkFailure('Failed to create item: $e'));
     }
   }

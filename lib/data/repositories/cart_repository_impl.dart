@@ -47,6 +47,24 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
+  Future<Either<Failure, Cart>> createCart(Cart cart) async {
+    final response = await apiClient.createItem(
+      ApiEndpoints.carts,
+      cartModelToJson(cart),
+      (data) => CartModel.fromJson(data), // Convierte a CartModel
+    );
+
+    return response.fold(
+      (failure) => Left(failure),
+      (cartModel) {
+        print('createCart ' + cartModel.toString());
+        // Convierte CartModel a Cart (entidad)
+        return Right(cartModel.toEntity());
+      },
+    );
+  }
+
+  @override
   Future<Either<Failure, Cart>> deleteCart(int id) async {
     final response = await apiClient.deleteItem(
       ApiEndpoints.cartById(id),

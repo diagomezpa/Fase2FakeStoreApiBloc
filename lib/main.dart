@@ -1,7 +1,9 @@
 import 'package:fase2cleanarchitecture/data/data_sources/api_client.dart';
 import 'package:fase2cleanarchitecture/data/repositories/cart_repository_impl.dart';
 import 'package:fase2cleanarchitecture/data/repositories/product_repository_impl.dart';
+import 'package:fase2cleanarchitecture/domain/entities/cart.dart';
 import 'package:fase2cleanarchitecture/domain/entities/product.dart';
+import 'package:fase2cleanarchitecture/domain/use_cases/carts/create_cart.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/carts/delete_cart.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/carts/get_cart.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/products/create_product.dart';
@@ -28,7 +30,8 @@ void main() {
   final getcarts = GetCarts(cartRepository);
   final getCart = GetCart(cartRepository);
   final deleteCart = DeleteCart(cartRepository);
-  final cartBloc = CartBloc(getCarts, getCart, deleteCart);
+  final createCart = CreateCart(cartRepository);
+  final cartBloc = CartBloc(getCarts, getCart, deleteCart, createCart);
 
   cartBloc.state.listen((state) {
     if (state is CartLoading) {
@@ -39,6 +42,8 @@ void main() {
       print('Carts loaded: ${state.carts.length}');
     } else if (state is CartDeleted) {
       print('Cart deleted with ID: ${state.cart.id}');
+    } else if (state is CartCreated) {
+      print('Cart created: ${state.cart.id}');
     } else if (state is CartError) {
       print('Error: ${state.message}');
     }
@@ -78,5 +83,14 @@ void main() {
   //productBloc.eventSink.add(UpdateProductEvent(1));
   //cartBloc.eventSink.add(LoadCartsEvent());
   //cartBloc.eventSink.add(LoadCartEvent(1));
-  cartBloc.eventSink.add(DeleteCartEvent(1));
+  //cartBloc.eventSink.add(DeleteCartEvent(1));
+  // cartBloc.eventSink.add(CreateCartEvent(Cart(
+  //   id: 0,
+  //   userId: 1,
+  //   date: DateTime.now(),
+  //   products: [
+  //     Products(productId: 1, quantity: 2),
+  //     Products(productId: 2, quantity: 1),
+  //   ],
+  // )));
 }

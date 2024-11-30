@@ -13,29 +13,29 @@ class CartModel {
   final int? id;
   final int? userId;
   final DateTime? date;
-  final List<ArticleModel>? articles;
+  final List<ProductsModel>? products;
 
   CartModel({
     required this.id,
     required this.userId,
     required this.date,
-    required this.articles,
+    required this.products,
   });
 
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
         id: json["id"],
         userId: json["userId"],
         date: DateTime.parse(json["date"]),
-        articles: List<ArticleModel>.from(
-            json["products"].map((x) => ArticleModel.fromJson(x))),
+        products: List<ProductsModel>.from(
+            json["products"].map((x) => ProductsModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "userId": userId,
         "date": date?.toIso8601String(),
-        "products": articles != null
-            ? List<dynamic>.from(articles!.map((x) => x.toJson()))
+        "products": products != null
+            ? List<dynamic>.from(products!.map((x) => x.toJson()))
             : null,
       };
 
@@ -44,34 +44,47 @@ class CartModel {
       id: id,
       userId: userId,
       date: date,
-      articles: articles?.map((e) => e.toEntity()).toList(),
+      products: products?.map((e) => e.toEntity()).toList(),
     );
   }
 }
 
-class ArticleModel {
-  final int articleId;
+class ProductsModel {
+  final int productId;
   final int quantity;
 
-  ArticleModel({
-    required this.articleId,
+  ProductsModel({
+    required this.productId,
     required this.quantity,
   });
 
-  factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
-        articleId: json["productId"],
+  factory ProductsModel.fromJson(Map<String, dynamic> json) => ProductsModel(
+        productId: json["productId"],
         quantity: json["quantity"],
       );
 
   Map<String, dynamic> toJson() => {
-        "articleId": articleId,
+        "productId": productId,
         "quantity": quantity,
       };
 
-  Article toEntity() {
-    return Article(
-      articleId: articleId,
+  Products toEntity() {
+    return Products(
+      productId: productId,
       quantity: quantity,
     );
   }
+}
+
+Map<String, dynamic> cartModelToJson(Cart cart) {
+  return {
+    "id": cart.id,
+    "userId": cart.userId,
+    "date": cart.date?.toIso8601String(),
+    "products": cart.products != null
+        ? List<dynamic>.from(cart.products!.map((x) =>
+            ProductsModel(productId: x.productId, quantity: x.quantity)
+                .toJson()))
+        : null,
+  };
 }
