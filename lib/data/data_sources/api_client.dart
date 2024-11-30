@@ -10,18 +10,13 @@ class ApiClient {
       String endpoint, T Function(Map<String, dynamic>) fromJson) async {
     try {
       final response = await http.get(Uri.parse('$baseUrl$endpoint'));
-      print('probando ');
+
       if (response.statusCode == 200) {
-        print(' 200');
         List<dynamic> data = json.decode(response.body);
         if (data != null) {
-          print(data);
           List<T> items = [];
           for (var item in data) {
-            print('xxxxxxxxxxxxxxxxxxx');
-            print(item);
             items.add(fromJson(item));
-            print('yyyyyyyyyyyyyyyyyyy');
           }
 
           return Right(items);
@@ -29,12 +24,10 @@ class ApiClient {
           return Left(ServerFailure('Failed to load data: Data is null'));
         }
       } else {
-        print('probando 2');
         return Left(
             ServerFailure('Failed to load data: ${response.statusCode}'));
       }
     } catch (e) {
-      print('probando 3 + ' + e.toString());
       return Left(NetworkFailure('Failed to load data: $e'));
     }
   }
@@ -42,11 +35,9 @@ class ApiClient {
   Future<Either<Failure, T>> fetchItem<T>(
       String endpoint, T Function(Map<String, dynamic>) fromJson) async {
     try {
-      print('holi1 $baseUrl$endpoint');
       final response = await http.get(Uri.parse('$baseUrl$endpoint'));
 
       if (response.statusCode == 200) {
-        print('holi2');
         Map<String, dynamic> data = json.decode(response.body);
         T item = fromJson(data);
         return Right(item);
@@ -73,25 +64,19 @@ class ApiClient {
       );
 
       if (response.statusCode == 200) {
-        print('200');
         Map<String, dynamic> data = json.decode(response.body);
-        print(data);
-        print('gggggggggggggg');
-        print(data.length);
+
         if (data.length == 1) {
-          print('items' + item.toString());
           data = {...item, 'id': data['id']};
-          print('data' + data.toString());
         } else {}
         T newItem = fromJson(data);
-        print('new item $newItem');
+
         return Right(newItem);
       } else {
         return Left(
             ServerFailure('Failed to create item: ${response.statusCode}'));
       }
     } catch (e) {
-      print('error $e');
       return Left(NetworkFailure('Failed to create item: $e'));
     }
   }

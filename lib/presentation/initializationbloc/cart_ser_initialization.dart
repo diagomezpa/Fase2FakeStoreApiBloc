@@ -22,15 +22,20 @@ CartBloc initializeCartBloc() {
     if (state is CartLoading) {
       print('Loading carts...');
     } else if (state is CartLoaded) {
-      print('Cart loaded: ${state.cart.id} ${state.cart.userId}');
+      print(
+          'Cart loaded: id ${state.cart.id}  userId ${state.cart.userId}  date ${state.cart.date} produts: ${state.cart.products?.map((p) => '{ productId: ${p.productId} quantity : ${p.quantity}}').join(', ')}');
     } else if (state is CartsLoaded) {
-      print('Carts loaded: ${state.carts.length}');
+      print(
+          'Carts loaded:\n${state.carts.map((c) => 'id ${c.id}  userId ${c.userId}  date ${c.date} produts: ${c.products?.map((p) => '{ productId: ${p.productId} quantity : ${p.quantity}}').join(', ')}').join('\n')}');
     } else if (state is CartDeleted) {
-      print('Cart deleted with ID: ${state.cart.id}');
+      print(
+          'Cart deleted with ID: id ${state.cart.id}  userId ${state.cart.userId}  date ${state.cart.date} produts: ${state.cart.products?.map((p) => '{ productId: ${p.productId} quantity : ${p.quantity}}').join(', ')}');
     } else if (state is CartCreated) {
-      print('Cart created: ${state.cart.id}');
+      print(
+          'Cart created: id ${state.cart.id}  userId ${state.cart.userId}  date ${state.cart.date} produts: ${state.cart.products?.map((p) => '{ productId: ${p.productId} quantity : ${p.quantity}}').join(', ')}');
     } else if (state is CartUpdated) {
-      print('Cart updated: ${state.cart.id}');
+      print(
+          'Cart updated:id ${state.cart.id}  userId ${state.cart.userId}  date ${state.cart.date} produts: ${state.cart.products?.map((p) => '{ productId: ${p.productId} quantity : ${p.quantity}}').join(', ')}');
     } else if (state is CartError) {
       print('Error: ${state.message}');
     }

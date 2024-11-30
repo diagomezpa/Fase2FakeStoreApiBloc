@@ -21,16 +21,20 @@ ProductBloc initializeProductBloc() {
     if (state is ProductLoading) {
       print('Loading product...');
     } else if (state is ProductLoaded) {
-      print('Product loaded: ${state.product.title}');
+      print(
+          'Product loaded: ${state.product.id} ${state.product.title} ${state.product.price} ${state.product.image} ${state.product.category} ');
     } else if (state is ProductsLoaded) {
       print(
-          'Products loaded: ${state.products.map((p) => p.title).join(', ')}');
+          'Products loaded:\n${state.products.map((p) => '{${p.id}} ${p.title} ${p.price} ${p.image} ${p.category}').join('\n')}');
     } else if (state is ProductCreated) {
-      print('Product created: ${state.product.title}');
+      print(
+          'Product created: ${state.product.id} ${state.product.title} ${state.product.price} ${state.product.image} ${state.product.category} ');
     } else if (state is ProductDeleted) {
-      print('Product deleted with ID: ${state.product.id}');
+      print(
+          'Product deleted with ID: ${state.product.id} ${state.product.title} ${state.product.price} ${state.product.image} ${state.product.category}');
     } else if (state is ProductUpdated) {
-      print('Product updated: ${state.product.title}');
+      print(
+          'Product updated: ${state.product.id} ${state.product.title} ${state.product.price} ${state.product.image} ${state.product.category}');
     } else if (state is ProductError) {
       print('Error: ${state.message}');
     }

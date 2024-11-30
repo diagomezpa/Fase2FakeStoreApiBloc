@@ -12,8 +12,7 @@ class UpdateCart {
 
   Future<Either<Failure, Cart>> call(int id) async {
     final cartOrFailure = await getcart(id);
-    print('uptade get');
-    print(cartOrFailure);
+
     return cartOrFailure.fold(
       (failure) => Left(failure),
       (product) async => await cartRepository.updateCart(id, product),

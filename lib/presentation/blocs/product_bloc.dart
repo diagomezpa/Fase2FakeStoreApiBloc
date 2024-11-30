@@ -114,7 +114,7 @@ class ProductBloc {
       failureOrProduct.fold(
         (failure) =>
             _stateController.add(ProductError(_mapFailureToMessage(failure))),
-        (product) => _stateController.add(ProductLoaded(product)),
+        (product) => _stateController.add(ProductCreated(product)),
       );
     }
     if (event is DeleteProductEvent) {

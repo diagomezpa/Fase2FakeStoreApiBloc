@@ -19,7 +19,6 @@ class CartRepositoryImpl implements CartRepository {
     return response.fold(
       (failure) => Left(failure),
       (cartModels) {
-        print(cartModels);
         // Convierte la lista de CartModel a Cart (entidad)
         List<Cart> carts = cartModels
             .where((model) => model != null)
@@ -57,7 +56,6 @@ class CartRepositoryImpl implements CartRepository {
     return response.fold(
       (failure) => Left(failure),
       (cartModel) {
-        print('createCart ' + cartModel.toString());
         // Convierte CartModel a Cart (entidad)
         return Right(cartModel.toEntity());
       },
@@ -87,12 +85,12 @@ class CartRepositoryImpl implements CartRepository {
       cartModelToJson(cart),
       (data) => CartModel.fromJson(data), // Convierte a CartModel
     );
-    print('entra en updatecart' + response.toString());
+
     return response.fold(
       (failure) => Left(failure),
       (cartModel) {
         // Convierte CartModel a Cart (entidad)
-        print('entra en updatecart2' + cartModel.toString());
+
         return Right(cartModel.toEntity());
       },
     );
