@@ -76,6 +76,13 @@ class ApiClient {
         print('200');
         Map<String, dynamic> data = json.decode(response.body);
         print(data);
+        print('gggggggggggggg');
+        print(data.length);
+        if (data.length == 1) {
+          print('items' + item.toString());
+          data = {...item, 'id': data['id']};
+          print('data' + data.toString());
+        } else {}
         T newItem = fromJson(data);
         print('new item $newItem');
         return Right(newItem);
