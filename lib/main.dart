@@ -6,6 +6,7 @@ import 'package:fase2cleanarchitecture/domain/entities/product.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/carts/create_cart.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/carts/delete_cart.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/carts/get_cart.dart';
+import 'package:fase2cleanarchitecture/domain/use_cases/carts/update_cart.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/products/create_product.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/products/delete_product.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/products/get_product.dart';
@@ -31,7 +32,10 @@ void main() {
   final getCart = GetCart(cartRepository);
   final deleteCart = DeleteCart(cartRepository);
   final createCart = CreateCart(cartRepository);
-  final cartBloc = CartBloc(getCarts, getCart, deleteCart, createCart);
+  final updateCart = UpdateCart(cartRepository, getCart);
+
+  final cartBloc =
+      CartBloc(getCarts, getCart, deleteCart, createCart, updateCart);
 
   cartBloc.state.listen((state) {
     if (state is CartLoading) {
@@ -44,6 +48,8 @@ void main() {
       print('Cart deleted with ID: ${state.cart.id}');
     } else if (state is CartCreated) {
       print('Cart created: ${state.cart.id}');
+    } else if (state is CartUpdated) {
+      print('Cart updated: ${state.cart.id}');
     } else if (state is CartError) {
       print('Error: ${state.message}');
     }
@@ -93,4 +99,5 @@ void main() {
   //     Products(productId: 2, quantity: 1),
   //   ],
   // )));
+  cartBloc.eventSink.add(UpdateCartEvent(1));
 }

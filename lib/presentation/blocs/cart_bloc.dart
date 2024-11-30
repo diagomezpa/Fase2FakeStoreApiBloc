@@ -6,6 +6,7 @@ import 'package:fase2cleanarchitecture/domain/use_cases/carts/create_cart.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/carts/delete_cart.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/carts/get_cart.dart';
 import 'package:fase2cleanarchitecture/domain/use_cases/carts/get_carts.dart';
+import 'package:fase2cleanarchitecture/domain/use_cases/carts/update_cart.dart';
 
 // Definir eventos
 abstract class CartEvent {}
@@ -25,6 +26,11 @@ class DeleteCartEvent extends CartEvent {
 class CreateCartEvent extends CartEvent {
   final Cart cart;
   CreateCartEvent(this.cart);
+}
+
+class UpdateCartEvent extends CartEvent {
+  final int id;
+  UpdateCartEvent(this.id);
 }
 
 // Definir estados
@@ -57,12 +63,18 @@ class CartCreated extends CartState {
   CartCreated(this.cart);
 }
 
+class CartUpdated extends CartState {
+  final Cart cart;
+  CartUpdated(this.cart);
+}
+
 // Crear la clase BLoC
 class CartBloc {
   final GetCarts getCart;
   final GetCart getCartById;
   final DeleteCart deleteCart;
   final CreateCart createCart;
+  final UpdateCart updateCart;
 
   final _stateController = StreamController<CartState>();
   Stream<CartState> get state => _stateController.stream;
@@ -70,7 +82,8 @@ class CartBloc {
   final _eventController = StreamController<CartEvent>();
   Sink<CartEvent> get eventSink => _eventController.sink;
 
-  CartBloc(this.getCart, this.getCartById, this.deleteCart, this.createCart) {
+  CartBloc(this.getCart, this.getCartById, this.deleteCart, this.createCart,
+      this.updateCart) {
     _eventController.stream.listen(_mapEventToState);
   }
 
@@ -111,6 +124,16 @@ class CartBloc {
         (failure) =>
             _stateController.add(CartError(_mapFailureToMessage(failure))),
         (cart) => _stateController.add(CartCreated(cart)),
+      );
+    }
+
+    if (event is UpdateCartEvent) {
+      _stateController.add(CartLoading());
+      final failureOrCart = await updateCart(event.id);
+      failureOrCart.fold(
+        (failure) =>
+            _stateController.add(CartError(_mapFailureToMessage(failure))),
+        (cart) => _stateController.add(CartUpdated(cart)),
       );
     }
   }

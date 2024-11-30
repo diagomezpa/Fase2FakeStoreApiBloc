@@ -79,4 +79,22 @@ class CartRepositoryImpl implements CartRepository {
       },
     );
   }
+
+  @override
+  Future<Either<Failure, Cart>> updateCart(int id, Cart cart) async {
+    final response = await apiClient.updateItem(
+      ApiEndpoints.cartById(id),
+      cartModelToJson(cart),
+      (data) => CartModel.fromJson(data), // Convierte a CartModel
+    );
+    print('entra en updatecart' + response.toString());
+    return response.fold(
+      (failure) => Left(failure),
+      (cartModel) {
+        // Convierte CartModel a Cart (entidad)
+        print('entra en updatecart2' + cartModel.toString());
+        return Right(cartModel.toEntity());
+      },
+    );
+  }
 }
