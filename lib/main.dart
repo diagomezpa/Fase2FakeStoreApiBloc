@@ -36,26 +36,58 @@ void main() {
 
   switch (choice) {
     case '1':
-      print('Cargando producto...');
-      productBloc.eventSink.add(LoadProduct(1));
+      print('Ingrese el ID del producto a cargar:');
+      int? productId = int.tryParse(stdin.readLineSync() ?? '');
+      if (productId != null) {
+        productBloc.eventSink.add(LoadProduct(productId));
+      } else {
+        print('ID de producto no válido.');
+      }
       break;
     case '2':
       productBloc.eventSink.add(LoadProducts());
       break;
     case '3':
-      productBloc.eventSink.add(DeleteProductEvent(4));
+      print('Ingrese el ID del producto a eliminar:');
+      int? productId = int.tryParse(stdin.readLineSync() ?? '');
+      if (productId != null) {
+        productBloc.eventSink.add(DeleteProductEvent(productId));
+      } else {
+        print('ID de producto no válido.');
+      }
       break;
     case '4':
-      print('Creando producto...');
-      productBloc.eventSink.add(CreateProductEvent(Product(
-        id: 0,
-        title: 'platos',
-        description: 'Description 1',
-        category: Category.ELECTRONICS,
-        image: 'https://example.com/smartphone.jpg',
-        rating: Rating(rate: 4.5, count: 150),
-        price: 101,
-      )));
+      print('Ingrese el título del producto:');
+      String? title = stdin.readLineSync();
+      print('Ingrese la descripción del producto:');
+      String? description = stdin.readLineSync();
+      print('Ingrese la URL de la imagen del producto:');
+      String? image = stdin.readLineSync();
+      print('Ingrese la calificación del producto:');
+      double? rate = double.tryParse(stdin.readLineSync() ?? '');
+      print('Ingrese el número de calificaciones del producto:');
+      int? count = int.tryParse(stdin.readLineSync() ?? '');
+      print('Ingrese el precio del producto:');
+      double? price = double.tryParse(stdin.readLineSync() ?? '');
+
+      if (title != null &&
+          description != null &&
+          image != null &&
+          rate != null &&
+          count != null &&
+          price != null) {
+        productBloc.eventSink.add(CreateProductEvent(Product(
+          id: 0,
+          title: title,
+          description: description,
+          category: Category.ELECTRONICS,
+          image: image,
+          rating: Rating(rate: rate, count: count),
+          price: price,
+        )));
+      } else {
+        print('Datos del producto no válidos.');
+      }
       break;
     case '5':
       cartBloc.eventSink.add(LoadCartsEvent());
@@ -64,39 +96,81 @@ void main() {
       cartBloc.eventSink.add(LoadCartEvent(1));
       break;
     case '7':
-      cartBloc.eventSink.add(DeleteCartEvent(1));
+      print('Ingrese el ID del carrito a eliminar:');
+      int? cartId = int.tryParse(stdin.readLineSync() ?? '');
+      if (cartId != null) {
+        cartBloc.eventSink.add(DeleteCartEvent(cartId));
+      } else {
+        print('ID de carrito no válido.');
+      }
       break;
     case '8':
-      cartBloc.eventSink.add(CreateCartEvent(Cart(
-        id: 0,
-        userId: 1,
-        date: DateTime.now(),
-        products: [
-          Products(productId: 1, quantity: 2),
-          Products(productId: 2, quantity: 1),
-        ],
-      )));
+      print('Ingrese el ID del usuario:');
+      int? userId = int.tryParse(stdin.readLineSync() ?? '');
+      print('Ingrese la fecha (YYYY-MM-DD):');
+      DateTime? date = DateTime.tryParse(stdin.readLineSync() ?? '');
+      if (userId != null && date != null) {
+        cartBloc.eventSink.add(CreateCartEvent(Cart(
+          id: 0,
+          userId: userId,
+          date: date,
+          products: [], // You can add logic to input products if needed
+        )));
+      } else {
+        print('Datos del carrito no válidos.');
+      }
       break;
     case '9':
-      cartBloc.eventSink.add(UpdateCartEvent(1));
+      print('Ingrese el ID del carrito a actualizar:');
+      int? cartId = int.tryParse(stdin.readLineSync() ?? '');
+      if (cartId != null) {
+        cartBloc.eventSink.add(UpdateCartEvent(cartId));
+      } else {
+        print('ID de carrito no válido.');
+      }
       break;
     case '10':
       userBloc.eventSink.add(LoadUsersEvent());
       break;
     case '11':
-      userBloc.eventSink.add(LoadUserEvent(1));
+      print('Ingrese el ID del usuario:');
+      int? userId = int.tryParse(stdin.readLineSync() ?? '');
+      if (userId != null) {
+        userBloc.eventSink.add(LoadUserEvent(userId));
+      } else {
+        print('ID de usuario no válido.');
+      }
       break;
     case '12':
-      userBloc.eventSink.add(DeleteUserEvent(1));
+      print('Ingrese el ID del usuario a eliminar:');
+      int? userId = int.tryParse(stdin.readLineSync() ?? '');
+      if (userId != null) {
+        userBloc.eventSink.add(DeleteUserEvent(userId));
+      } else {
+        print('ID de usuario no válido.');
+      }
       break;
     case '13':
+      print('Ingrese el nombre de usuario:');
+      String? username = stdin.readLineSync();
+      print('Ingrese la contraseña:');
+      String? password = stdin.readLineSync();
+      print('Ingrese el teléfono:');
+      String? phone = stdin.readLineSync();
+      print('Ingrese el nombre:');
+      String? firstname = stdin.readLineSync();
+      print('Ingrese el apellido:');
+      String? lastname = stdin.readLineSync();
+      print('Ingrese el correo electrónico:');
+      String? email = stdin.readLineSync();
+
       userBloc.eventSink.add(CreateUserEvent(User(
         id: 0,
-        username: 'test',
-        password: 'test',
-        phone: '1234567890',
-        name: Name(firstname: 'John', lastname: 'Doe'),
-        email: 'john.doe@example.com',
+        username: username ?? '',
+        password: password ?? '',
+        phone: phone ?? '',
+        name: Name(firstname: firstname ?? '', lastname: lastname ?? ''),
+        email: email ?? '',
       )));
       break;
     case '14':
