@@ -44,18 +44,6 @@ class ProductModel {
         "image": image,
         "rating": rating?.toJson(),
       };
-
-  Product toEntity() {
-    return Product(
-      id: id!,
-      title: title!,
-      price: price!,
-      description: description!,
-      category: category!,
-      image: image!,
-      rating: rating?.toEntity() ?? Rating(rate: 0.0, count: 0),
-    );
-  }
 }
 
 class RatingModel {
@@ -102,20 +90,4 @@ class EnumValues<T> {
     reverseMap = map.map((k, v) => MapEntry(v, k));
     return reverseMap;
   }
-}
-
-// Convierte Product (entidad) a ProductModel y luego a JSON
-Map<String, dynamic> productModelToJson(Product product) {
-  return ProductModel(
-    id: product.id,
-    title: product.title,
-    price: product.price,
-    description: product.description,
-    category: product.category,
-    image: product.image,
-    rating: RatingModel(
-      rate: product.rating.rate,
-      count: product.rating.count,
-    ),
-  ).toJson();
 }

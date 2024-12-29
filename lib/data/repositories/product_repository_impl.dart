@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fase2cleanarchitecture/core/error/failures.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_client.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_endpoints.dart';
+import 'package:fase2cleanarchitecture/data/mappers/product_mapper.dart';
 import 'package:fase2cleanarchitecture/data/models/product_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/product.dart';
 import 'package:fase2cleanarchitecture/domain/repositories/product_repository.dart';
@@ -15,16 +16,15 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Either<Failure, Product>> createProduct(Product product) async {
     final response = await apiClient.createItem(
       ApiEndpoints.products,
-      productModelToJson(
-          product), // Convierte Product (entidad) a ProductModel y luego a JSON
+      ProductMapper.toJson(product), // Use ProductMapper to convert to JSON
       (data) => ProductModel.fromJson(data),
     );
 
     return response.fold(
       (failure) => Left(failure),
       (productModel) {
-        // Convierte ProductModel a Product (entidad)
-        return Right(productModel.toEntity());
+        return Right(ProductMapper.toEntity(
+            productModel)); // Use ProductMapper to convert to entity
       },
     );
   }
@@ -38,7 +38,8 @@ class ProductRepositoryImpl implements ProductRepository {
 
     return response.fold(
       (failure) => Left(failure),
-      (productModel) => Right(productModel.toEntity()),
+      (productModel) => Right(ProductMapper.toEntity(
+          productModel)), // Use ProductMapper to convert to entity
     );
   }
 
@@ -52,8 +53,8 @@ class ProductRepositoryImpl implements ProductRepository {
     return response.fold(
       (failure) => Left(failure),
       (productModel) {
-        // Convierte ProductModel a Product (entidad)
-        return Right(productModel.toEntity());
+        return Right(ProductMapper.toEntity(
+            productModel)); // Use ProductMapper to convert to entity
       },
     );
   }
@@ -68,9 +69,9 @@ class ProductRepositoryImpl implements ProductRepository {
     return response.fold(
       (failure) => Left(failure),
       (productModels) {
-        // Convierte la lista de ProductModel a Product (entidad)
-        List<Product> products =
-            productModels.map((model) => model.toEntity()).toList();
+        List<Product> products = productModels
+            .map((model) => ProductMapper.toEntity(model))
+            .toList(); // Use ProductMapper to convert to entity
 
         return Right(products);
       },
@@ -82,16 +83,15 @@ class ProductRepositoryImpl implements ProductRepository {
       int id, Product product) async {
     final response = await apiClient.updateItem(
       ApiEndpoints.productById(id),
-      productModelToJson(
-          product), // Convierte Product (entidad) a ProductModel y luego a JSON
+      ProductMapper.toJson(product), // Use ProductMapper to convert to JSON
       (data) => ProductModel.fromJson(data),
     );
 
     return response.fold(
       (failure) => Left(failure),
       (productModel) {
-        // Convierte ProductModel a Product (entidad)
-        return Right(productModel.toEntity());
+        return Right(ProductMapper.toEntity(
+            productModel)); // Use ProductMapper to convert to entity
       },
     );
   }
