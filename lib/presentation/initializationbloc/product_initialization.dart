@@ -39,13 +39,11 @@ ProductBloc initializeProductBloc() {
     categoryWidth = product.category.toString().length > categoryWidth
         ? product.category.toString().length
         : categoryWidth;
+  }
 
-    print('anchos actualizados');
-    print('titleWidth: $titleWidth');
-    print('priceWidth: $priceWidth');
-    print('imageWidth: $imageWidth');
-    print('categoryWidth: $categoryWidth');
-    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+  void printProductState(String stateName, product) {
+    print(
+        '$stateName:\n| ID       | Title${' ' * (titleWidth - 5)} | Price${' ' * (priceWidth - 5)} | Image${' ' * (imageWidth - 5)} | Category${' ' * (categoryWidth - 8)} |\n${formatProductRow(product, titleWidth, priceWidth, imageWidth, categoryWidth)}');
   }
 
   productBloc.state.listen((state) {
@@ -68,20 +66,16 @@ ProductBloc initializeProductBloc() {
           'Products loaded:\n| ID       | Title${' ' * (titleWidth - 5)} | Price${' ' * (priceWidth - 5)} | Image${' ' * (imageWidth - 5)} | Category${' ' * (categoryWidth - 8)} |\n${state.products.map((p) => formatProductRow(p, titleWidth, priceWidth, imageWidth, categoryWidth)).join('\n')}');
     } else if (state is ProductLoaded) {
       updateWidths(state.product);
-      print(
-          'Product loaded:\n| ID       | Title${' ' * (titleWidth - 5)} | Price${' ' * (priceWidth - 5)} | Image${' ' * (imageWidth - 5)} | Category${' ' * (categoryWidth - 8)} |\n${formatProductRow(state.product, titleWidth, priceWidth, imageWidth, categoryWidth)}');
+      printProductState('Product loaded', state.product);
     } else if (state is ProductCreated) {
       updateWidths(state.product);
-      print(
-          'Product created:\n| ID       | Title${' ' * (titleWidth - 5)} | Price${' ' * (priceWidth - 5)} | Image${' ' * (imageWidth - 5)} | Category${' ' * (categoryWidth - 8)} |\n${formatProductRow(state.product, titleWidth, priceWidth, imageWidth, categoryWidth)}');
+      printProductState('Product created', state.product);
     } else if (state is ProductDeleted) {
       updateWidths(state.product);
-      print(
-          'Product deleted with ID:\n| ID       | Title${' ' * (titleWidth - 5)} | Price${' ' * (priceWidth - 5)} | Image${' ' * (imageWidth - 5)} | Category${' ' * (categoryWidth - 8)} |\n${formatProductRow(state.product, titleWidth, priceWidth, imageWidth, categoryWidth)}');
+      printProductState('Product deleted with ID', state.product);
     } else if (state is ProductUpdated) {
       updateWidths(state.product);
-      print(
-          'Product updated:\n| ID       | Title${' ' * (titleWidth - 5)} | Price${' ' * (priceWidth - 5)} | Image${' ' * (imageWidth - 5)} | Category${' ' * (categoryWidth - 8)} |\n${formatProductRow(state.product, titleWidth, priceWidth, imageWidth, categoryWidth)}');
+      printProductState('Product updated', state.product);
     } else if (state is ProductError) {
       print('Error: ${state.message}');
     }
