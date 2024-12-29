@@ -1,4 +1,5 @@
-import 'package:fase2cleanarchitecture/data/models/product_model.dart';
+import 'package:fase2cleanarchitecture/data/models/product/product_model.dart';
+import 'package:fase2cleanarchitecture/data/models/product/rating_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/product.dart';
 
 class ProductMapper {

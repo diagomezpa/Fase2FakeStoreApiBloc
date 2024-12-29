@@ -1,5 +1,8 @@
+import 'package:fase2cleanarchitecture/data/models/user/address_model.dart';
+import 'package:fase2cleanarchitecture/data/models/user/geolocation_model.dart';
+import 'package:fase2cleanarchitecture/data/models/user/name_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/user.dart';
-import '../../data/models/user_model.dart';
+import '../models/user/user_model.dart';
 
 class UserMapper {
   static User toEntity(UserModel model) {

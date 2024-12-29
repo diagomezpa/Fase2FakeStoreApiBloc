@@ -3,7 +3,7 @@ import 'package:fase2cleanarchitecture/core/error/failures.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_client.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_endpoints.dart';
 import 'package:fase2cleanarchitecture/data/mappers/product_mapper.dart';
-import 'package:fase2cleanarchitecture/data/models/product_model.dart';
+import 'package:fase2cleanarchitecture/data/models/product/product_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/product.dart';
 import 'package:fase2cleanarchitecture/domain/repositories/product_repository.dart';
 

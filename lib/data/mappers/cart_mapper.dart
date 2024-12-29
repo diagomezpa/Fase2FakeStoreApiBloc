@@ -1,4 +1,5 @@
-import 'package:fase2cleanarchitecture/data/models/cart_model.dart';
+import 'package:fase2cleanarchitecture/data/models/cart/cart_model.dart';
+import 'package:fase2cleanarchitecture/data/models/cart/products_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/cart.dart';
 
 class CartMapper {

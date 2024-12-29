@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fase2cleanarchitecture/core/error/failures.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_client.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_endpoints.dart';
-import 'package:fase2cleanarchitecture/data/models/cart_model.dart';
+import 'package:fase2cleanarchitecture/data/models/cart/cart_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/cart.dart';
 import 'package:fase2cleanarchitecture/domain/repositories/cart_repository.dart';
 import 'package:fase2cleanarchitecture/data/mappers/cart_mapper.dart';

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:fase2cleanarchitecture/domain/entities/product.dart';
+import 'rating_model.dart';
+import 'enum_values.dart';
 
 class ProductModel {
   final int? id;
@@ -46,48 +48,9 @@ class ProductModel {
       };
 }
 
-class RatingModel {
-  final double? rate;
-  final int? count;
-
-  RatingModel({
-    this.rate,
-    this.count,
-  });
-
-  factory RatingModel.fromJson(Map<String, dynamic> json) => RatingModel(
-        rate: json["rate"]?.toDouble(),
-        count: json["count"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "rate": rate,
-        "count": count,
-      };
-
-  Rating toEntity() {
-    return Rating(
-      rate: rate!,
-      count: count!,
-    );
-  }
-}
-
 final categoryValues = EnumValues({
   "electronics": Category.ELECTRONICS,
   "jewelery": Category.JEWELERY,
   "men's clothing": Category.MENS_CLOTHING,
   "women's clothing": Category.WOMENS_CLOTHING,
 });
-
-class EnumValues<T> {
-  final Map<String, T> map;
-  late final Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
-}
