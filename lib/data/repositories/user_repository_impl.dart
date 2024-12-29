@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fase2cleanarchitecture/core/error/failures.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_client.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_endpoints.dart';
+import 'package:fase2cleanarchitecture/data/mappers/user_mapper.dart';
 import 'package:fase2cleanarchitecture/data/models/user_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/user.dart';
 import 'package:fase2cleanarchitecture/domain/repositories/user_repository.dart';
@@ -21,7 +22,8 @@ class UserRepositoryImpl implements UserRepository {
     return response.fold(
       (failure) => Left(failure),
       (userModels) {
-        List<User> users = userModels.map((model) => model.toEntity()).toList();
+        List<User> users =
+            userModels.map((model) => UserMapper.toEntity(model)).toList();
         return Right(users);
       },
     );
@@ -36,7 +38,7 @@ class UserRepositoryImpl implements UserRepository {
 
     return response.fold(
       (failure) => Left(failure),
-      (userModel) => Right(userModel.toEntity()),
+      (userModel) => Right(UserMapper.toEntity(userModel)),
     );
   }
 
@@ -50,7 +52,7 @@ class UserRepositoryImpl implements UserRepository {
 
     return response.fold(
       (failure) => Left(failure),
-      (userModel) => Right(userModel.toEntity()),
+      (userModel) => Right(UserMapper.toEntity(userModel)),
     );
   }
 
@@ -64,7 +66,7 @@ class UserRepositoryImpl implements UserRepository {
 
     return response.fold(
       (failure) => Left(failure),
-      (userModel) => Right(userModel.toEntity()),
+      (userModel) => Right(UserMapper.toEntity(userModel)),
     );
   }
 
@@ -77,7 +79,7 @@ class UserRepositoryImpl implements UserRepository {
 
     return response.fold(
       (failure) => Left(failure),
-      (userModel) => Right(userModel.toEntity()),
+      (userModel) => Right(UserMapper.toEntity(userModel)),
     );
   }
 

@@ -27,7 +27,9 @@ class UserModel {
       password: json['password'],
       name: NameModel.fromJson(json['name']),
       phone: json['phone'],
-      address: AddressModel.fromJson(json['address']),
+      address: json['address'] != null
+          ? AddressModel.fromJson(json['address'])
+          : null,
     );
   }
 
@@ -41,18 +43,6 @@ class UserModel {
       'phone': phone,
       'address': address?.toJson(),
     };
-  }
-
-  User toEntity() {
-    return User(
-      id: id,
-      email: email,
-      username: username,
-      password: password,
-      name: name?.toEntity() ?? Name(firstname: '', lastname: ''),
-      phone: phone,
-      address: address?.toEntity(),
-    );
   }
 }
 
@@ -90,16 +80,6 @@ class AddressModel {
       'zipcode': zipcode,
     };
   }
-
-  Address toEntity() {
-    return Address(
-      geolocation: geolocation.toEntity(),
-      city: city,
-      street: street,
-      number: number,
-      zipcode: zipcode,
-    );
-  }
 }
 
 class GeolocationModel {
@@ -124,13 +104,6 @@ class GeolocationModel {
       'long': long,
     };
   }
-
-  Geolocation toEntity() {
-    return Geolocation(
-      lat: lat,
-      long: long,
-    );
-  }
 }
 
 class NameModel {
@@ -154,12 +127,5 @@ class NameModel {
       'firstname': firstname,
       'lastname': lastname,
     };
-  }
-
-  Name toEntity() {
-    return Name(
-      firstname: firstname,
-      lastname: lastname,
-    );
   }
 }
