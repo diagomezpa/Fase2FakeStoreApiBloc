@@ -1,4 +1,3 @@
-
 # Fase 2 Clean Architecture - Dart
 
 Este proyecto demuestra cómo implementar una arquitectura limpia en una aplicación de línea de comandos. Proporciona ejemplos de manejo de estado reactivo y comunicación efectiva con APIs externas, utilizando **Dart** y herramientas como **dartz** para manejar errores de manera funcional.
@@ -20,9 +19,22 @@ fase2cleanarchitecture/
 │   │   │   └── api_client.dart  # Cliente para manejar las solicitudes HTTP
 │   │   │   └── api_endpoints.dart  # Define los endpoints de la API
 │   │   ├── models/
-│   │   │   └── user_model.dart  # Modelo para User
-│   │   │   └── product_model.dart  # Modelo para Product
-│   │   │   └── cart_model.dart  # Modelo para Cart
+│   │   │   ├── cart/
+│   │   │   │   └── cart_model.dart  # Modelo para Cart
+│   │   │   │   └── products_model.dart  # Modelo para Products en Cart
+│   │   │   ├── product/
+│   │   │   │   └── product_model.dart  # Modelo para Product
+│   │   │   │   └── rating_model.dart  # Modelo para Rating en Product
+│   │   │   │   └── enum_values.dart  # Utilidad para manejar valores de enumeración
+│   │   │   └── user/
+│   │   │       └── user_model.dart  # Modelo para User
+│   │   │       └── name_model.dart  # Modelo para Name en User
+│   │   │       └── address_model.dart  # Modelo para Address en User
+│   │   │       └── geolocation_model.dart  # Modelo para Geolocation en Address
+│   │   ├── mappers/
+│   │   │   └── user_mapper.dart  # Mappers para User
+│   │   │   └── product_mapper.dart  # Mappers para Product
+│   │   │   └── cart_mapper.dart  # Mappers para Cart
 │   │   ├── repositories/
 │   │       └── user_repository_impl.dart  # Implementación del repositorio para User
 │   │       └── product_repository_impl.dart  # Implementación del repositorio para Product
@@ -32,38 +44,38 @@ fase2cleanarchitecture/
 │   │   │   └── user.dart  # Entidad para User
 │   │   │   └── product.dart  # Entidad para Product
 │   │   │   └── cart.dart  # Entidad para Cart
-│   │   ├── repositories/
-│   │   │   └── user_repository.dart  # Interfaz para el repositorio de User
-│   │   │   └── product_repository.dart  # Interfaz para el repositorio de Product
-│   │   │   └── cart_repository.dart  # Interfaz para el repositorio de Cart
-│   │   └── use_cases/
-│   │       └── users/
-│   │           └── get_users.dart  # Caso de uso para obtener los usuarios
-│   │           └── create_user.dart  # Caso de uso para crear un usuario
-│   │           └── delete_user.dart  # Caso de uso para eliminar un usuario
-│   │           └── get_user.dart  # Caso de uso para obtener un usuario por ID
-│   │           └── update_user.dart  # Caso de uso para actualizar un usuario
-│   │       └── products/
-│   │           └── get_products.dart  # Caso de uso para obtener productos
-│   │           └── create_product.dart  # Caso de uso para crear un producto
-│   │           └── delete_product.dart  # Caso de uso para eliminar un producto
-│   │           └── get_product.dart  # Caso de uso para obtener un producto por ID
-│   │           └── update_product.dart  # Caso de uso para actualizar un producto
-│   │       └── carts/
-│   │           └── get_carts.dart  # Caso de uso para obtener el carrito
-│   │           └── create_cart.dart  # Caso de uso para crear un carrito
-│   │           └── remove_from_cart.dart  # Caso de uso para eliminar productos del carrito
-│   │           └── update_cart.dart  # Caso de uso para actualizar el carrito
+│   ├── repositories/
+│   │   └── user_repository.dart  # Interfaz para el repositorio de User
+│   │   └── product_repository.dart  # Interfaz para el repositorio de Product
+│   │   └── cart_repository.dart  # Interfaz para el repositorio de Cart
+│   └── use_cases/
+│       └── users/
+│           └── get_users.dart  # Caso de uso para obtener los usuarios
+│           └── create_user.dart  # Caso de uso para crear un usuario
+│           └── delete_user.dart  # Caso de uso para eliminar un usuario
+│           └── get_user.dart  # Caso de uso para obtener un usuario por ID
+│           └── update_user.dart  # Caso de uso para actualizar un usuario
+│       └── products/
+│           └── get_products.dart  # Caso de uso para obtener productos
+│           └── create_product.dart  # Caso de uso para crear un producto
+│           └── delete_product.dart  # Caso de uso para eliminar un producto
+│           └── get_product.dart  # Caso de uso para obtener un producto por ID
+│           └── update_product.dart  # Caso de uso para actualizar un producto
+│       └── carts/
+│           └── get_carts.dart  # Caso de uso para obtener el carrito
+│           └── create_cart.dart  # Caso de uso para crear un carrito
+│           └── remove_from_cart.dart  # Caso de uso para eliminar productos del carrito
+│           └── update_cart.dart  # Caso de uso para actualizar el carrito
 │   └── presentation/
-│   │   ├── blocs/
-│   │       └── user_bloc.dart  # BLoC para manejar el estado de los usuarios
-│   │       └── product_bloc.dart  # BLoC para manejar el estado de los productos
-│   │       └── cart_bloc.dart  # BLoC para manejar el estado del carrito
-│   │   ├── initializationbloc/
-│   │       └── user_initialization.dart  # Inicialización del estado de User
-│   │       └── cart_initialization.dart  # Inicialización del estado de Cart
-│   │       └── product_initialization.dart  # Inicialización del estado de Product
-│   └── main.dart  # Punto de entrada de la aplicación
+│       ├── blocs/
+│       │   └── user_bloc.dart  # BLoC para manejar el estado de los usuarios
+│       │   └── product_bloc.dart  # BLoC para manejar el estado de los productos
+│       │   └── cart_bloc.dart  # BLoC para manejar el estado del carrito
+│       ├── initializationbloc/
+│       │   └── user_initialization.dart  # Inicialización del estado de User
+│       │   └── cart_initialization.dart  # Inicialización del estado de Cart
+│       │   └── product_initialization.dart  # Inicialización del estado de Product
+│       └── main.dart  # Punto de entrada de la aplicación
 ├── test/
 │   └── ...  # falta por implementar
 └── README.md  # Documentación de la arquitectura del proyecto
@@ -131,7 +143,7 @@ return response.fold(
 
 La aplicación depende de la entrada del usuario a través de la consola para realizar las operaciones (como cargar, crear, actualizar o eliminar productos, carritos y usuarios). 
 
-Por ahora, los valores de entrada están **quemados** en el código, pero puedes modificarlos para probar diferentes casos de uso. **Una mejora futura** será agregar manejo de errores en caso de que el usuario ingrese un valor incorrecto, y ofrecer una interfaz más robusta.
+Por ahora, los valores de entrada están **Por consola** en lo facilita que puedan probar con varios datos. **Una mejora futura** será agregar manejo de errores en caso de que el usuario ingrese un valor incorrecto, y ofrecer una interfaz más robusta.
 
 ## Funcionalidades
 
