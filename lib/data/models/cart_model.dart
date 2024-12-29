@@ -38,15 +38,6 @@ class CartModel {
             ? List<dynamic>.from(products!.map((x) => x.toJson()))
             : null,
       };
-
-  Cart toEntity() {
-    return Cart(
-      id: id,
-      userId: userId,
-      date: date,
-      products: products?.map((e) => e.toEntity()).toList(),
-    );
-  }
 }
 
 class ProductsModel {
@@ -67,24 +58,4 @@ class ProductsModel {
         "productId": productId,
         "quantity": quantity,
       };
-
-  Products toEntity() {
-    return Products(
-      productId: productId,
-      quantity: quantity,
-    );
-  }
-}
-
-Map<String, dynamic> cartModelToJson(Cart cart) {
-  return {
-    "id": cart.id,
-    "userId": cart.userId,
-    "date": cart.date?.toIso8601String(),
-    "products": cart.products != null
-        ? List<dynamic>.from(cart.products!.map((x) =>
-            ProductsModel(productId: x.productId, quantity: x.quantity)
-                .toJson()))
-        : null,
-  };
 }

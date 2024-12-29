@@ -5,12 +5,14 @@ import 'package:fase2cleanarchitecture/data/data_sources/api_endpoints.dart';
 import 'package:fase2cleanarchitecture/data/models/cart_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/cart.dart';
 import 'package:fase2cleanarchitecture/domain/repositories/cart_repository.dart';
+import 'package:fase2cleanarchitecture/data/mappers/cart_mapper.dart';
 
 class CartRepositoryImpl implements CartRepository {
   final ApiClient apiClient;
 
   CartRepositoryImpl({required this.apiClient});
 
+  @override
   Future<Either<Failure, List<Cart>>> fetchCarts() async {
     final response = await apiClient.fetchList(
       ApiEndpoints.carts,
@@ -19,10 +21,9 @@ class CartRepositoryImpl implements CartRepository {
     return response.fold(
       (failure) => Left(failure),
       (cartModels) {
-        // Convierte la lista de CartModel a Cart (entidad)
         List<Cart> carts = cartModels
             .where((model) => model != null)
-            .map((model) => model!.toEntity())
+            .map((model) => CartMapper.toEntity(model!))
             .toList();
         return Right(carts);
       },
@@ -39,8 +40,7 @@ class CartRepositoryImpl implements CartRepository {
     return response.fold(
       (failure) => Left(failure),
       (cartModel) {
-        // Convierte ProductModel a Product (entidad)
-        return Right(cartModel.toEntity());
+        return Right(CartMapper.toEntity(cartModel));
       },
     );
   }
@@ -49,15 +49,14 @@ class CartRepositoryImpl implements CartRepository {
   Future<Either<Failure, Cart>> createCart(Cart cart) async {
     final response = await apiClient.createItem(
       ApiEndpoints.carts,
-      cartModelToJson(cart),
+      CartMapper.toJson(cart),
       (data) => CartModel.fromJson(data), // Convierte a CartModel
     );
 
     return response.fold(
       (failure) => Left(failure),
       (cartModel) {
-        // Convierte CartModel a Cart (entidad)
-        return Right(cartModel.toEntity());
+        return Right(CartMapper.toEntity(cartModel));
       },
     );
   }
@@ -72,8 +71,7 @@ class CartRepositoryImpl implements CartRepository {
     return response.fold(
       (failure) => Left(failure),
       (cartModel) {
-        // Convierte CartModel a Cart (entidad)
-        return Right(cartModel.toEntity());
+        return Right(CartMapper.toEntity(cartModel));
       },
     );
   }
@@ -82,16 +80,14 @@ class CartRepositoryImpl implements CartRepository {
   Future<Either<Failure, Cart>> updateCart(int id, Cart cart) async {
     final response = await apiClient.updateItem(
       ApiEndpoints.cartById(id),
-      cartModelToJson(cart),
+      CartMapper.toJson(cart),
       (data) => CartModel.fromJson(data), // Convierte a CartModel
     );
 
     return response.fold(
       (failure) => Left(failure),
       (cartModel) {
-        // Convierte CartModel a Cart (entidad)
-
-        return Right(cartModel.toEntity());
+        return Right(CartMapper.toEntity(cartModel));
       },
     );
   }
