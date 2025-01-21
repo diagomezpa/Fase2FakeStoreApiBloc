@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:fase2cleanarchitecture/domain/entities/product.dart';
 import 'rating_model.dart';
-import 'enum_values.dart';
+import '../../enum/enum_values.dart';
 
 class ProductModel {
   final int? id;

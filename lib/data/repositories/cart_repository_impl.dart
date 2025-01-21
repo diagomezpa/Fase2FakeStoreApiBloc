@@ -5,7 +5,7 @@ import 'package:fase2cleanarchitecture/data/data_sources/api_endpoints.dart';
 import 'package:fase2cleanarchitecture/data/models/cart/cart_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/cart.dart';
 import 'package:fase2cleanarchitecture/domain/repositories/cart_repository.dart';
-import 'package:fase2cleanarchitecture/data/mappers/cart_mapper.dart';
+import 'package:fase2cleanarchitecture/data/mappers/cart/cart_mapper.dart';
 
 class CartRepositoryImpl implements CartRepository {
   final ApiClient apiClient;

@@ -14,7 +14,9 @@ class ProductMapper {
       rating: model.rating?.toEntity() ?? Rating(rate: 0.0, count: 0),
     );
   }
+}
 
+class ProductJsonMapper {
   static Map<String, dynamic> toJson(Product product) {
     return ProductModel(
       id: product.id,

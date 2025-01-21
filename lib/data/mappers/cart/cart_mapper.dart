@@ -1,3 +1,4 @@
+import 'package:fase2cleanarchitecture/data/mappers/cart/products_mapper.dart';
 import 'package:fase2cleanarchitecture/data/models/cart/cart_model.dart';
 import 'package:fase2cleanarchitecture/data/models/cart/products_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/cart.dart';
@@ -23,14 +24,5 @@ class CartMapper {
                   .toJson()))
           : null,
     };
-  }
-}
-
-class ProductsMapper {
-  static Products toEntity(ProductsModel model) {
-    return Products(
-      productId: model.productId,
-      quantity: model.quantity,
-    );
   }
 }

@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fase2cleanarchitecture/core/error/failures.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_client.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_endpoints.dart';
-import 'package:fase2cleanarchitecture/data/mappers/user_mapper.dart';
+import 'package:fase2cleanarchitecture/data/mappers/user/user_mapper.dart';
 import 'package:fase2cleanarchitecture/data/models/user/address_model.dart';
 import 'package:fase2cleanarchitecture/data/models/user/geolocation_model.dart';
 import 'package:fase2cleanarchitecture/data/models/user/name_model.dart';

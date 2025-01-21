@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fase2cleanarchitecture/core/error/failures.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_client.dart';
 import 'package:fase2cleanarchitecture/data/data_sources/api_endpoints.dart';
-import 'package:fase2cleanarchitecture/data/mappers/product_mapper.dart';
+import 'package:fase2cleanarchitecture/data/mappers/product/product_mapper.dart';
 import 'package:fase2cleanarchitecture/data/models/product/product_model.dart';
 import 'package:fase2cleanarchitecture/domain/entities/product.dart';
 import 'package:fase2cleanarchitecture/domain/repositories/product_repository.dart';
@@ -16,7 +16,8 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Either<Failure, Product>> createProduct(Product product) async {
     final response = await apiClient.createItem(
       ApiEndpoints.products,
-      ProductMapper.toJson(product), // Use ProductMapper to convert to JSON
+      ProductJsonMapper.toJson(
+          product), // Use ProductJsonMapper to convert to JSON
       (data) => ProductModel.fromJson(data),
     );
 
@@ -83,7 +84,8 @@ class ProductRepositoryImpl implements ProductRepository {
       int id, Product product) async {
     final response = await apiClient.updateItem(
       ApiEndpoints.productById(id),
-      ProductMapper.toJson(product), // Use ProductMapper to convert to JSON
+      ProductJsonMapper.toJson(
+          product), // Use ProductJsonMapper to convert to JSON
       (data) => ProductModel.fromJson(data),
     );
 
